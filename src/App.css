@@ -36,3 +36,145 @@
     transform: rotate(360deg);
   }
 }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Josefin+Sans&family=Roboto+Condensed&display=swap');
+body{
+    background-color: #022B4B;
+}
+a{
+    text-decoration: none;
+}
+.botonMenu{
+    color: #1B4965;
+    height: 50vw;
+    width: 50vw;
+    border: 4px solid #62B6CB;
+    background-color: #62B6CB;
+    border-radius: 3vh;
+    margin: auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+@media all and (orientation: landscape) { 
+    .botonMenu{
+    height: 25vh;
+    width: 25vh;
+    border: 4px solid #62B6CB;
+    margin: auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    }
+}
+.botonMenu img{
+    width: 70%;
+    margin: auto;
+}
+.botonMenu .botonTitulo {
+    font-family: 'Roboto Condensed', sans-serif;
+    text-align: center;
+    margin: 5px 0 8px 0;
+}
+.icon{
+    font-size: 12vh;
+    text-align: center;
+    color: #1B4965
+}
+.icon-code{
+    font-size: 5vh;
+    color: #CAE9FF;
+}
+.text-link {
+  color: inherit;
+  text-decoration: inherit;
+}
+.titulo{
+    text-align: center;
+    color: #CAE9FF;
+    font-family: 'Chewy', cursive;
+    letter-spacing: 0.5vh;
+}
+#wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.item {
+  font-size: 2vh;
+  min-height: 100px;
+  background-color: #E5E9F2;
+  border: 2px solid #E5E9F2;
+  margin: 10px;
+}
+.item .imagen{
+    height: 70%;
+}
+.item .imagen img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.item .desc{
+  font-family: 'Fredoka', sans-serif;
+    float:inline-end;
+    margin-left: 5px;
+    height: 30%;
+    line-height: 18px;
+    margin-top: 30px;
+}
+.item .item-nombre{
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 800;
+}
+.mascota-caja{
+  color: black;
+}
+.formulario-label{
+  color: #CAE9FF;
+  font-size: calc(0.8rem + 1.25vw);
+}
+.mascota-data{
+  color: #CAE9FF;
+  font-size: calc(1rem + 1.25vw);
+  line-height: calc(4rem + 1.25vw);
+  text-align: center;
+}
+.mascota-data-vacunas{
+  color: #CAE9FF;
+  font-size: calc(0.7rem + 1.25vw);
+  line-height: calc(0.8rem + 1.25vw);
+}
+@media only screen and (max-width: 500px) {
+  .mascota-data{
+    color: #CAE9FF;
+    font-size: calc(1rem + 1.25vw);
+    line-height: calc(4rem + 1.25vw);
+    text-align: center;
+  }
+}
+.fuente{
+  font-family: 'Chewy', cursive;
+}
+.descripcion{
+  line-height: calc(1rem + 1.25vw);
+}
+.formulario-text{
+  background-color: #022B4B;
+  border: solid 2.5px #CAE9FF;
+  color: #CAE9FF;
+}
+.formulario-text:focus{
+  background-color: #0c4875;
+  border: solid 2.5px #CAE9FF;
+  color: #CAE9FF;
+}
+.formulario-feedback{
+  color: #ff7070
+}
+.vacunas-lista{
+  color: #fff;
+}
