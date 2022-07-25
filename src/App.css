@@ -163,6 +163,7 @@ a{
   line-height: calc(1rem + 1.25vw);
 }
 .formulario-text{
+  font-size: calc(0.7rem + 1.25vw);
   background-color: #022B4B;
   border: solid 2.5px #CAE9FF;
   color: #CAE9FF;
@@ -177,4 +178,14 @@ a{
 }
 .vacunas-lista{
   color: #fff;
+  font-size: calc(0.7rem + 0.9vw);
+}
+.galeria-imagen{
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
