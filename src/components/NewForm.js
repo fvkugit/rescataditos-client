@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
 import { Container, Form, Col, Row, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import * as yup from 'yup'
 import { Formik } from 'formik'
 import ImageInput from "./ImageInput";
 import axios from 'axios';
 import Swal from 'sweetalert2'
-
+import { FaTrashAlt } from 'react-icons/fa'
 
 const formSchema= yup.object().shape({
     nombre: yup.string().min(3, 'El nombre debe tener 3 caracteres o más').required('Necesitas completar este campo'),
@@ -25,7 +26,15 @@ function NewForm() {
     const [ image, setImage ] = useState(false);
     const refVacuna = useRef(null);
     const refVacunaFecha = useRef(null);
+    const { REACT_APP_MASCOTAS } = process.env
+    const navigate = useNavigate()
 
+    function removerVacuna(id){
+        var newLista = vacunasList.filter(function(value, index, arr){ 
+            return value.id !== id;
+        });
+        setVacunasList(newLista)
+    }
 
     function agregarVacuna(v, vfecha, errors){
         setVacunaSubmited(true)
@@ -38,27 +47,38 @@ function NewForm() {
     }
 
     async function enviarFormulario(values, errors){
+        setFormSubmited(true)
+        if (errors.nombre || errors.color || errors.raza || !image || errors.descripcion){
+            return
+        }
         var allData = values
         allData.listvacunas = vacunasList 
-        allData.imagen = image 
+        allData.imagen = image
+        allData.editCode = window.localStorage.getItem('editCode') || '';
 
         try{
-            const res = await axios.post("http://localhost:3000/api/mascotas", allData)
-            Swal.fire({
+           await axios.post(REACT_APP_MASCOTAS, allData)
+           Swal.fire({
             icon: 'success',
             title: 'Cambios guardados.',
             text: 'La nueva mascota ha sido creada con exito!',
-            })
+            }).then((result) => {
+            if (result.isConfirmed) {
+              navigate('/lista')
+            }
+          })
         }
         catch(e){
+            const errorData = e.response.data 
+            const errorMessage = errorData ? errorData.message : 'Algo ha salido mal, vuelve a intentarlo!'
             Swal.fire({
                 icon: 'error',
                 title: 'No se ha podido guardar',
-                text: 'Algo ha salido mal, vuelve a intentarlo!',
+                text: errorMessage,
             })
         }
 
-        setFormSubmited(true)
+        
     }
 
   return (
@@ -149,7 +169,13 @@ function NewForm() {
                             {vacunasList.length ?
                                 <ul>
                                     {vacunasList.map((vacuna)=>(
-                                        <li key={vacuna.id}>{vacuna.desc} - {vacuna.fecha}</li>
+                                        <li key={vacuna.id}>{vacuna.desc} - {vacuna.fecha}
+                                        
+                                        <Button onClick={()=>{removerVacuna(vacuna.id)}} className="ms-2" variant="danger" size="sm">
+                                            <FaTrashAlt/>
+                                        </Button>
+                                        
+                                        </li> 
                                     ))}
                                 </ul>
                                 :
@@ -161,7 +187,7 @@ function NewForm() {
                             <Form.Control className="formulario-text" ref={refVacuna} name="vacuna" onChange={handleChange} type="text" placeholder="Nombre vacuna"/>
                         </Col>
                         <Col xs={6}>
-                            <Form.Control type="date" ref={refVacunaFecha} name="fechavacuna" onChange={handleChange} placeholder="Fecha de vacuna" />
+                            <Form.Control className="formulario-text" type="date" ref={refVacunaFecha} name="fechavacuna" onChange={handleChange} placeholder="Fecha de vacuna" />
                         </Col>
                         <Col xs={12}> 
                             <div className="d-grid gap-2 mt-2 mb-3">
@@ -174,7 +200,7 @@ function NewForm() {
                     </Form.Group>
                 </Col>
             </Row>
-            <div className="d-grid gap-2">
+            <div className="d-grid gap-2 mb-5">
                 <Button onClick={() => enviarFormulario(values, errors)}>Guardar mascota</Button>
             </div>
         </Form>
