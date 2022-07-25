@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Image, Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
@@ -6,6 +6,7 @@ import axios from 'axios';
 function ViewMascota() {
     const [datosMascota, setDatosMascota] = useState()
     const { id } = useParams()
+    const { REACT_APP_MASCOTAS } = process.env
     
     function formatDate(date){
         const fecha = new Date(date)
@@ -14,10 +15,9 @@ function ViewMascota() {
 
     useEffect(() => {
       async function getData(){
-        const url = `http://localhost:3000/api/mascotas/${id}`
+        const url = `${REACT_APP_MASCOTAS}/${id}`
         const res = await axios.get(url)
         setDatosMascota(res.data)
-        console.log(res.data)
       }
       getData()
     }, [])
@@ -44,7 +44,7 @@ function ViewMascota() {
                     <span className="fuente">Vacunas:</span> 
                     <div className="mascota-data-vacunas">
                         {(datosMascota.vacunas).map((v)=>(
-                            <li>{v.nombre} - {formatDate(v.fecha)}</li>
+                            <li key={v.id_vacuna}>{v.nombre} - {formatDate(v.fecha)}</li>
                         ))}
                     </div>
                 </Col>
@@ -52,12 +52,12 @@ function ViewMascota() {
                     <span className="fuente">Descripción:</span> 
                     <p className="descripcion">{datosMascota.descripcion}</p>
                 </Col>
-                <Col xs={12} className="mascota-data">
+                <Col xs={12} className="mascota-data mb-5">
                     <span className="fuente">Galeria:</span> 
                     <Row>
                         {(datosMascota.imagenes).map((v)=>(
-                            <Col xs={6}>
-                                <Image className="ratio ratio-1x1" src={v.imagen}></Image>
+                            <Col key={v.id_imagen} xs={6} lg={4}>
+                                <Image className="ratio ratio-1x1 mt-4" src={v.imagen}></Image>
                             </Col>
                         ))}
                         
