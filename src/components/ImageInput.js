@@ -41,7 +41,7 @@ function ImageInput({ image, setImage }) {
             </Form.Label>
         ))}
         
-        <Form.Control type="file" size="sm" onChange={handleImage} />
+        <Form.Control type="file" size="lg" onChange={handleImage} />
       </Form.Group>
     </>
   );
