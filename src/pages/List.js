@@ -5,20 +5,20 @@ import axios from "axios";
 import { Link } from 'react-router-dom'
 
 function List() {
-  const { REACT_APP_LISTA } = process.env;
+  const { REACT_APP_MASCOTAS } = process.env;
   const [mascotas, setMascotas] = useState();
 
   useEffect(() => {
     async function getData() {
       try {
-        const res = await axios.get(REACT_APP_LISTA);
+        const res = await axios.get(REACT_APP_MASCOTAS);
         setMascotas(res.data.result);
       } catch (e) {
         console.log(e);
       }
     }
     getData();
-  }, [REACT_APP_LISTA]);
+  }, [REACT_APP_MASCOTAS]);
 
   return (
     <>
@@ -31,7 +31,7 @@ function List() {
                 <Link className="mascota-caja" to={`/mascotas/${mascota.id_mascota}`}>
                   <div className="item">
                     <div className="imagen ratio ratio-1x1">
-                      <img src={mascota.imagenes[0].imagen} alt="" />
+                      <img src={mascota.imagenes[(mascota.imagenes).length - 1].imagen} alt="" />
                     </div>
                     <div className="desc">
                       <p className="item-nombre">{mascota.nombre}</p>
